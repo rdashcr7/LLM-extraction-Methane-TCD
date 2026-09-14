@@ -23,11 +23,6 @@ Create a `.env` file next to `main.py`:
 ```dotenv
 OPENAI_API_KEY=your_api_key_here
 OPENAI_MODEL_ID=gpt-5.5
-
-# Optional settings
-OPENAI_BASE_URL=https://api.openai.com/v1
-OPENAI_REASONING_EFFORT=low
-OPENAI_TEXT_VERBOSITY=low
 ```
 
 Do not commit `.env` or any file containing an API key.
