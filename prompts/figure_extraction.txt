@@ -1,0 +1,42 @@
+FIGURE_FILENAME={{FIGURE_FILENAME}}
+MATCHED_XML_LABEL={{MATCHED_XML_LABEL}}
+MATCHED_XML_ORDER={{MATCHED_XML_ORDER}}
+FIGURE_CONTEXT={{FIGURE_CONTEXT}}
+PAPER_CONSTANTS={{PAPER_CONSTANTS}}
+{{EXPECTED_PANEL_SPECS_BLOCK}}
+{{EXPECTED_SERIES_BLOCK}}
+{{EXPECTED_SERIES_COUNTS_BLOCK}}
+{{STRICT_RETRY_BLOCK}}
+{{PREVIOUS_BAD_OUTPUT_BLOCK}}
+
+TASK: Extract quantitative datapoints from the CH4/methane-conversion panel(s) specified by EXPECTED_PANEL_SPECS. This broad prompt is used only as a panel-guided fallback or emergency fallback; prefer the locked panel and series information when provided.
+
+PROCEDURE:
+1. For each specified CH4/methane-conversion panel, lock the x-axis label, y-axis label, legend field, and series list before extracting numbers.
+2. For each series, identify all visible markers and their marker/line encoding. If there are no markers, use exactly 10 evenly spaced points along the visible curve.
+3. For each marker/point, draw perpendiculars from the point to both axes to read x and y values. Estimated graph readings must start with "~".
+4. Map x-values into the correct output field according to the x-axis variable, and map legend field values into the appropriate catalyst/reaction field.
+5. Use caption/XML context and PAPER_CONSTANTS only as support for fixed conditions that apply to the selected panel/series.
+6. Reverify that the number of rows per series matches the discovered marker count or expected count when provided; numeric expected counts are authoritative strict completeness requirements, not advisory estimates.
+
+OUTPUT: Return ONLY a JSON array of objects with EXACT keys {{OUTPUT_KEYS}}.
+
+RULES:
+- Include the specified CH4/methane-conversion panel(s); do not collapse different panels into one panel.
+- Keep Series_Label as the exact visible legend/category label. Do not paraphrase or chemistry-normalize visible labels.
+- CH4_Conversion_% must come only from true methane conversion/remaining/unreacted CH4 axes. Never convert hydrogen or carbon metrics into CH4 conversion.
+- Reaction_Time_hr_min_s must include units when populated. If the unit is unsupported, use NR.
+- Use pressure only when it is visible in the panel/caption/context or available in PAPER_CONSTANTS; otherwise use NR.
+- Do not fill catalyst synthesis fields from reaction heating or characterization text.
+- Unsupported or ambiguous values -> "NR".
+
+DUAL-AXIS FIGURE RULE:
+- In dual-axis panels, include only series tied to CH4/methane conversion.
+- Exclude H2 productivity, H2 production, H2 yield, C2 fraction, CO/CO2, power, and efficiency series.
+- Never convert or relabel H2 productivity/yield/rate values as CH4 conversion values.
+- IH and CH are heating modes, not catalysts: IH = induction heating; CH = conventional/conduction heating.
+
+DUAL-AXIS PROTECTION:
+- Extract CH4_Conversion_% only from a true CH4/methane conversion, XCH4, remaining/unreacted CH4, or equivalent conversion axis.
+- If the target marker/curve is tied to H2 productivity, H2 yield, H2 production rate, C2 fraction, CO, CO2, or any non-CH4-conversion axis, omit that marker/curve.
+- For dual-axis panels, do not confuse a right-axis H2 productivity series with a left-axis CH4 conversion series, even if both have similar x-values or the same heating-mode label.

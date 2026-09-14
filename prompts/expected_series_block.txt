@@ -1,0 +1,2 @@
+EXPECTED_SERIES={{EXPECTED_SERIES}}
+Include each listed series if truly visible in a CH4/methane-conversion panel. Omit a listed series only when it is not actually visible or is a recycled/reused/later-cycle series that should be excluded.

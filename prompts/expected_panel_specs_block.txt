@@ -1,0 +1,2 @@
+EXPECTED_PANEL_SPECS={{EXPECTED_PANEL_SPECS}}
+Use these panel specifications as the primary guide. Extract only these CH4/methane-conversion panel(s), keeping each panel separate. For each panel, follow the listed series labels, legend field, field values, and expected marker/point counts.

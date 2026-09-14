@@ -1,0 +1,47 @@
+FIGURE_FILENAME={{FIGURE_FILENAME}}
+MATCHED_XML_LABEL={{MATCHED_XML_LABEL}}
+MATCHED_XML_ORDER={{MATCHED_XML_ORDER}}
+TARGET_SERIES_LABEL={{TARGET_SERIES_LABEL}}
+TARGET_PANEL={{TARGET_PANEL_JSON}}
+TARGET_SERIES={{TARGET_SERIES_JSON}}
+EXPECTED_MARKER_COUNT={{EXPECTED_MARKER_COUNT}}
+FIGURE_CONTEXT={{FIGURE_CONTEXT}}
+PAPER_CONSTANTS={{PAPER_CONSTANTS}}
+{{STRICT_RETRY_BLOCK}}
+{{PREVIOUS_BAD_OUTPUT_BLOCK}}
+
+TASK: Extract the CH4/methane-conversion datapoints for ONLY the locked TARGET_SERIES_LABEL in the locked TARGET_PANEL.
+
+PROCEDURE:
+1. Use the panel_id, x_axis_label, y_axis_label, legend_field, field_value, and panel_context_fields in TARGET_PANEL/TARGET_SERIES to lock the panel and series.
+2. Re-identify all markers belonging to this series using legend color, marker shape, fill/open state, line style, and plot_type. For scatter-comparison plots, a legend entry often corresponds to one marker only.
+3. For each visible marker, mentally draw a perpendicular line from the marker center to the x-axis and to the y-axis; read the x-value and y-value from the panel scales.
+4. Convert the x-value into the matching output field: time/TOS -> Reaction_Time_hr_min_s; temperature -> Temperature_C_or_K; methane flow -> CH4_Feed_Flow_Rate_mL_or_L_per_min; total flow -> Feed_Flow_Rate_mL_or_L_per_min; catalyst mass -> Catalyst_Mass_g_or_mg; space velocity -> Space_Velocity; pressure -> Pressure_bar_or_atm_or_Pa. Use the exact visible X_Axis_Label and Y_Axis_Label in every row.
+5. Fill CH4_Conversion_% from the y-value only when the y-axis is a true methane conversion/remaining/unreacted CH4 metric. If reading from a graph, prefix estimated values with "~".
+6. Apply the legend_field/field_value to the correct field in every row for this series. Examples: a temperature legend goes to Temperature_C_or_K; a loading legend goes to Metal_Weight_%; a support legend goes to Support_Type; a catalyst legend goes to Catalyst_Label/Series_Label.
+7. Fill fixed panel fields from panel_context_fields, FIGURE_CONTEXT, or PAPER_CONSTANTS only when directly supported for this panel/series.
+8. If EXPECTED_MARKER_COUNT is numeric, treat it as an authoritative required row count and return exactly that many datapoint rows for this target series. Do not stop after one point if the expected count is greater than one. If the target is a single-marker scatter-comparison series, EXPECTED_MARKER_COUNT should be 1 and one row is complete.
+
+SCATTER RULE: If TARGET_PANEL/TARGET_SERIES indicates a scatter-comparison plot, extract only the marker(s) belonging to the locked legend entry; do not extract all points in the panel for one series.
+
+MARKERLESS LINE RULE: If TARGET_SERIES says extraction_mode is "10 evenly spaced line points" or the selected curve has no visible markers, extract exactly 10 approximately evenly spaced points across the visible curve.
+
+OUTPUT: Return ONLY a JSON array with EXACT keys {{OUTPUT_KEYS}}.
+
+ADDITIONAL RULES:
+- Series_Label must equal TARGET_SERIES_LABEL exactly unless the target label is NR; do not rename it from the caption.
+- If the visible legend label itself is a catalyst/composition/support name, set Catalyst_Label or Support_Type accordingly when appropriate.
+- Use catalyst-related fields from the panel caption/context when explicitly tied to the selected panel/series.
+- Do not fill catalyst synthesis fields from reaction heating or characterization text.
+- Unsupported values -> "NR".
+
+DUAL-AXIS SINGLE-SERIES RULE:
+- Extract the locked target only if it belongs to the CH4/methane-conversion axis.
+- If the locked target series is actually tied to a secondary H2 productivity/yield/production axis, C2-fraction axis, power axis, or efficiency axis, return an empty JSON array [].
+- Do not read a secondary-axis marker against the CH4 conversion scale.
+- IH and CH are heating modes, not catalysts: IH = induction heating; CH = conventional/conduction heating.
+
+DUAL-AXIS PROTECTION:
+- Extract CH4_Conversion_% only from a true CH4/methane conversion, XCH4, remaining/unreacted CH4, or equivalent conversion axis.
+- If the target marker/curve is tied to H2 productivity, H2 yield, H2 production rate, C2 fraction, CO, CO2, or any non-CH4-conversion axis, omit that marker/curve.
+- For dual-axis panels, do not confuse a right-axis H2 productivity series with a left-axis CH4 conversion series, even if both have similar x-values or the same heating-mode label.

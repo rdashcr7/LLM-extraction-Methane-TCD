@@ -1,0 +1,6 @@
+STRICT COMPLETENESS CHECK: The previous or upcoming extraction may have collapsed curves or missed markers. Recount the visible markers for each locked series, but treat any provided EXPECTED_MARKER_COUNT or EXPECTED_SERIES_COUNTS as strict completeness requirements. Marker/marker+line plots require one row per visible marker belonging to the locked series. For scatter-comparison plots, do not treat all markers in the panel as one series; a legend entry may have only one marker. Pure line plots with no markers require exactly 10 approximately evenly spaced rows per curve. Before final JSON, verify that row count per series matches the identified marker/point count.
+
+DUAL-AXIS PROTECTION:
+- Extract CH4_Conversion_% only from a true CH4/methane conversion, XCH4, remaining/unreacted CH4, or equivalent conversion axis.
+- If the target marker/curve is tied to H2 productivity, H2 yield, H2 production rate, C2 fraction, CO, CO2, or any non-CH4-conversion axis, omit that marker/curve.
+- For dual-axis panels, do not confuse a right-axis H2 productivity series with a left-axis CH4 conversion series, even if both have similar x-values or the same heating-mode label.

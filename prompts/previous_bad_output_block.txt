@@ -1,0 +1,2 @@
+PREVIOUS_BAD_OUTPUT={{PREVIOUS_BAD_OUTPUT}}
+Re-check the figure against the locked panel/series information and correct missing, collapsed, or mismapped datapoints.

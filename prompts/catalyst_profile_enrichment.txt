@@ -1,0 +1,34 @@
+TARGET_CATALYST={{TARGET_CATALYST}}
+TARGET_SERIES={{TARGET_SERIES}}
+TARGET_SUPPORT={{TARGET_SUPPORT}}
+TARGET_REDUCTION_STATE={{TARGET_REDUCTION_STATE}}
+CONTEXT={{CONTEXT}}
+
+TASK: Enrich catalyst, support, and synthesis fields for the target using only the supplied context.
+
+OUTPUT: Return one JSON object with EXACT keys {{OUTPUT_KEYS}}.
+
+TARGET BINDING:
+- Treat only chemically equivalent naming variants as aliases of the target.
+- Use a value only if it is explicitly tied to the target by the same table row, list item, sentence/clause, or explicit mapping.
+- If multiple catalysts/supports are listed, choose only the value mapped to the target.
+- Do not copy the first, highest, nearest, or most prominent value.
+- If the target-specific value is unclear, return "NR".
+
+FIELD RULES:
+- Fill only keys requested in OUTPUT_KEYS.
+- Support_Type must be a full, human-readable support/carrier identity, not just a paper-specific code or abbreviation.
+- Expand support abbreviations or sample codes when the context defines them. Keep exact material identifiers when informative, e.g. HZSM-5 zeolite, SBA-15 mesoporous silica, alumina (Al2O3), activated carbon, carbon black, cordierite monolith, silicon carbide (SiC), boron nitride (BN), bentonite clay.
+- Put shorthand labels, modifier names, pore/grade details, Si/Al ratio, carbonization condition, monolith geometry, or sample-code details in Support_Description when useful.
+- Support_Surface_Area must be the BET/specific surface area tied to the target support/catalyst by the target-specific mapping.
+- Do not use used/spent/post-reaction values for fresh targets, or fresh values for used/spent targets.
+- Precursor_Salts, drying, calcination, reduction, and cooling fields must be tied to the target catalyst/support or explicitly shared by the target family.
+- Calcination means true calcination, usually oxide-forming thermal treatment in air/O2 or a step explicitly called calcination. Do not map pyrolysis, carbonization, inert precursor destruction, reaction heating, or polymer decomposition in N2/Ar into calcination unless the paper explicitly says calcination.
+- Put gases in Calcination_Atmosphere or Reduction_Atmosphere, not in temperature/time fields.
+- Keep aligned multisteps with " + "; all temperatures/times/ramp rates must include units.
+- If unreduced, reduction temperature/atmosphere should be NR, and Reduction_Time_hr_min_s may be "0 h" only when directly supported.
+- Unsupported, ambiguous, or not target-specific values -> "NR".
+
+SHORT OPERATION LABEL RULE:
+- IH, CH, MW, and CW are operation/heating-mode labels, not catalyst labels and not elemental compositions.
+- Do not infer Active_Metal from IH or CH. Metal-free carbon catalysts should have Active_Metal = "NR" unless a metal is explicitly loaded.

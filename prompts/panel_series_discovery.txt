@@ -1,0 +1,74 @@
+FIGURE_FILENAME={{FIGURE_FILENAME}}
+MATCHED_XML_LABEL={{MATCHED_XML_LABEL}}
+MATCHED_XML_ORDER={{MATCHED_XML_ORDER}}
+FIGURE_CONTEXT={{FIGURE_CONTEXT}}
+
+TASK: First decide whether the figure has multiple panels, then identify every panel of interest: panels whose y-axis or plotted quantity is CH4/methane conversion, XCH4, methane remaining/unreacted CH4, or an equivalent methane-conversion metric.
+
+For EACH selected CH4/methane-conversion panel:
+1. Copy the visible panel identifier if present, e.g. (a), Fig. 2a, left panel, top-right panel, or panel 1.
+2. Copy the x-axis and y-axis labels exactly from that panel.
+3. Classify the plot type as one of: scatter comparison, marker+line curve, pure line curve, bar chart, or other.
+4. Identify what field the legend or visible curve/category labels represent, such as Catalyst_Label, Support_Type, Temperature_C_or_K, Metal_Weight_%, Space_Velocity, Pressure_bar_or_atm_or_Pa, Feed_Gas_Mixture, CH4_Feed_Flow_Rate_mL_or_L_per_min, or other.
+5. Identify the number of visible series/curves in that panel and the visible field value associated with each series.
+6. For each series/curve, provide an authoritative point_count for THAT series only. Count only visible markers/datapoints belonging to the exact legend/category item. Do not use the total number of panel markers as the count for every series.
+7. For scatter-comparison plots where a legend entry corresponds to one isolated marker, set point_count=1 for that legend entry. If the same legend entry visibly appears at multiple x-y positions, set point_count to that exact visible count.
+8. For marker+line curves, count all visible markers belonging to that series. For pure line curves with no markers, set point_count=10 and extraction_mode="10 evenly spaced line points".
+9. If a numeric point_count is not visually determinable for a series, use "NR" rather than guessing. Any numeric point_count you provide will be treated downstream as a strict completeness requirement, not as advice.
+10. Identify other fields explicitly mentioned in the figure caption/XML context for that selected panel, such as fixed temperature, pressure, feed mixture, flow rate, GHSV/WHSV, catalyst mass, support, metal loading, or heating source.
+
+OUTPUT: Return ONLY valid JSON with EXACT top-level keys {{OUTPUT_KEYS}}.
+
+Use this top-level shape:
+{
+  "has_multiple_panels": true_or_false,
+  "all_panel_count": number_of_panels_visible_in_the_figure_or_NR,
+  "panels": [ ... relevant CH4/methane-conversion panels only ... ],
+  "is_target_conversion_figure": true_or_false,
+  "notes": "short explanation"
+}
+
+Each object inside "panels" must use this structure:
+{
+  "panel_id": "visible panel label such as (a), Fig. 2a, left panel, or panel 1",
+  "x_axis_label": "exact visible x-axis label",
+  "y_axis_label": "exact visible y-axis label",
+  "legend_field": "field represented by the legend/category labels, e.g. Temperature_C_or_K, Metal_Weight_%, Support_Type, Catalyst_Label, Space_Velocity, Pressure_bar_or_atm_or_Pa, Feed_Gas_Mixture, or NR",
+  "plot_type": "scatter comparison, marker+line curve, pure line curve, bar chart, or other",
+  "series": [
+    {
+      "label": "exact visible legend/category text, or curve 1 if no legend but curves are distinct",
+      "field_value": "the value represented by that label, with units if visible or supported",
+      "point_count": number_of_visible_markers_for_this_series_or_10_for_markerless_line_or_NR,
+      "marker_color": "visible marker/line color or NR",
+      "marker_shape": "visible marker shape and fill/open state or NR",
+      "line_style": "solid/dashed/dotted/etc. or NR",
+      "plot_type": "same plot type as the panel unless different",
+      "extraction_mode": "visible markers, one scatter marker, or 10 evenly spaced line points"
+    }
+  ],
+  "panel_context_fields": {"FieldName":"value explicitly supported for this selected panel"},
+  "notes": "short note about uncertainty, hidden markers, overlapping markers, or why a panel was selected"
+}
+
+RULES:
+- This is a panel/series discovery pass only. Do not extract numeric datapoint y-values here except marker counts.
+- Numeric point_count values are authoritative and will trigger strict retries if the later extraction returns fewer rows. Therefore, count per series carefully and never assign the panel-total point count to every legend item.
+- Include all CH4/methane-conversion panels, not just the clearest one.
+- Do not include H2 yield, carbon yield, Raman, XRD, SEM/TEM, TGA, BET, or characterization-only panels unless they directly plot CH4/methane conversion.
+- Copy visible legend/category text verbatim; do not normalize chemistry in labels.
+- Do not invent non-visible series. Use caption/XML context only to interpret what visible series values mean or to recover fixed panel conditions.
+- For scatter comparison plots, the legend may list one item per point; in that case each series has exactly one marker unless the same legend entry visibly appears at multiple x-y locations.
+- For marker+line curves, count all visible markers belonging to that series.
+- For pure line curves with no markers, use 10 synthetic evenly spaced extraction points for the count.
+
+DUAL-AXIS PANEL RULE:
+- If a panel has a CH4/methane-conversion y-axis and a second y-axis for H2 productivity, H2 yield, H2 production, C2 fraction, power, or efficiency, include only the series tied to the CH4/methane-conversion axis.
+- Exclude secondary-axis H2/productivity/rate series from the "series" list, even if they share the same x-axis and panel.
+- Use axis color, marker color, nearby axis title, legend text, and label placement to decide which axis a series belongs to. For example, a green right y-axis labelled H2 productivity normally means green markers belong to H2 productivity, not CH4 conversion.
+- IH and CH are heating-mode labels: IH = induction heating; CH = conventional/conduction heating. They are not catalyst names or active metals.
+
+DUAL-AXIS RULE:
+- If a panel has CH4/methane conversion on one y-axis and H2 productivity/yield/production rate on a second y-axis, include only the series tied to the CH4/methane-conversion axis.
+- Do not include H2 productivity/yield/rate markers as CH4-conversion series, even if they share the same time axis, heating-mode label, or catalyst label.
+- When two visual encodings share a label such as IH or CH, distinguish them by the y-axis they belong to. The right-axis H2 productivity series is not a CH4-conversion series.

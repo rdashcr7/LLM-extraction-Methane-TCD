@@ -1,0 +1,24 @@
+TASK: From article-text chunk {{CHUNK_IDX}}/{{N_CHUNKS}}, extract paper-level constants and catalyst-level constants that are truly constant in this chunk.
+
+FIELD DEFINITIONS:
+{{FIELD_DEFINITIONS}}
+
+OUTPUT: Return one JSON object with EXACT keys {{OUTPUT_KEYS}}.
+
+RULES:
+- Use only this TEXT_CHUNK. Unsupported or ambiguous values -> "NR".
+- Fill a field only when it applies broadly to the paper/chunk or is explicitly presented as a shared condition. If multiple conflicting values occur for different catalysts/figures, use NR so later figure/catalyst-specific steps can resolve it.
+- Do not output catalyst-specific values as paper-level constants. In particular, if Support_Surface_Area, Support_Description, Metal_Weight_%, Catalyst_Class, Promoter_Type, or Support_Type differs by catalyst/sample, output NR for that field unless the value is explicitly shared by all relevant catalysts in the chunk.
+- Catalyst_Label should be filled only when one shared catalyst clearly applies; otherwise NR. Catalyst composition rules may still be captured in Active_Metal, Metal_Weight_%, Promoter_Type, Support_Type, or Support_Description when they are explicitly global/shared.
+- Preserve units for time, ramp rate, pressure, flow, mass, space velocity, metal loading, and surface area. Normalize all temperatures to °C.
+- Derive CH4 flow only from explicit total flow plus explicit methane fraction. Do not infer feed composition unless the balance gas is explicit.
+- Join multistep drying, true calcination, reduction, and cooling values with " + " only when steps belong to the same process type and are explicitly aligned.
+- Do not classify pyrolysis, carbonization, inert thermal treatment, precursor destruction in N2/Ar, or reaction furnace heating as calcination unless the paper explicitly calls it calcination or describes a conventional oxide-forming calcination step.
+- Put gases only in Calcination_Atmosphere or Reduction_Atmosphere when they belong to those synthesis steps; do not include gases in temperature/time fields.
+- No Title/DOI in the output even if present in the text.
+
+MULTIPLE-ALTERNATIVE CONDITION GUARD:
+- Do not concatenate different experimental alternatives into one paper-level value.
+- If the chunk reports several reaction temperatures, methane/feed flows, space velocities, pressures, or catalyst masses for different figures, panels, runs, or conditions, return "NR" for that paper-level field.
+- Never output values like "250 mL min-1 + 150 mL min-1 + 100 mL min-1" unless the paper explicitly describes them as simultaneous aligned streams in one single experiment. Alternative figure/run conditions must be "NR" at pass 1.
+- Shorthand condition labels such as IH, CH, MW, and CW are heating/operation labels, not catalysts or active metals.

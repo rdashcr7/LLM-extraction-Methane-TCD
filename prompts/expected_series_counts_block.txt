@@ -1,0 +1,2 @@
+EXPECTED_SERIES_COUNTS={{EXPECTED_SERIES_COUNTS}}
+These counts are strict, authoritative completeness targets for the locked panel/series extraction, not advisory estimates. If a numeric expected count is supplied for a series, the extraction should return exactly that many datapoint rows for that series unless the target series is genuinely not visible in the locked panel.

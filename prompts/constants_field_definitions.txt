@@ -1,0 +1,29 @@
+Catalyst_Label: Paper-level catalyst name only when one shared catalyst clearly applies to the whole chunk/paper; otherwise NR.
+Active_Metal: Catalytically active metal element(s), e.g. Ni, Fe, Co, Cu; use NR for metal-free carbon catalysts such as activated carbon or carbon black unless a metal is explicitly loaded.
+Metal_Weight_%: Metal loading(s) with units, e.g. "Ni 50 wt%" or "Ni 50 wt% + Co 10 wt%"; include compositional rules when explicit.
+Catalyst_Class: Broad catalyst material class such as carbon material, metallic, metal oxide, alloy, supported metal, zeolite-supported, spinel, hydrotalcite-derived, or composite.
+Promoter_Type: Promoter/additive element or compound and loading when explicit, excluding the main active metal and support.
+Support_Type: Catalyst support/carrier material, e.g. Al2O3, MgO, SiO2, AC, CNT, zeolite; use NR for unsupported/bulk catalysts.
+Support_Surface_Area: BET/specific surface area tied to the matching target catalyst/support, with units such as m2/g; use NR if multiple sample-specific values appear and no single shared value applies.
+Support_Description: Short support details not captured by Support_Type, such as pore class, K/C ratio, Si/Al ratio, commercial grade, or carbonization condition.
+Heating_Mode: Reaction heating source/reactor heat source, not synthesis heating; preserve the reported source if unusual.
+Pressure_bar_or_atm_or_Pa: Reaction pressure with units; use "1 atm" when atmospheric pressure is explicitly reported.
+Reaction_Time_hr_min_s: Reaction time, time-on-stream, duration, or fixed run time with units; do not use synthesis aging/drying time.
+Feed_Flow_Rate_mL_or_L_per_min: Total feed flow rate with units; include only reaction feed, not synthesis gas purge unless used as reaction feed.
+CH4_Feed_Flow_Rate_mL_or_L_per_min: Methane feed flow rate with units; calculate only when total flow and methane fraction are explicit.
+Feed_Gas_Mixture: Reaction feed composition, e.g. "50% CH4 + 50% N2" or "100% CH4"; include balance gas only when explicit.
+Space_Velocity: Reaction GHSV/WHSV/space velocity with units exactly as reported.
+Catalyst_Mass_g_or_mg: Catalyst mass loaded for the reaction with units.
+Temperature_C_or_K: Reaction temperature or range with units, normalized to °C; do not use synthesis/calcination temperature.
+Precursor_Salts: Catalyst precursor salt(s), e.g. Ni(NO3)2·6H2O, cobalt nitrate, iron acetate; join multiple with " + ".
+Drying_Temperature_C_or_K: Catalyst/support drying temperature with units; use only drying/oven/evaporation steps, not reaction temperature.
+Drying_Time_hr_min_s: Catalyst/support drying time with units; align with drying temperature when multistep.
+Calcination_Temperature_C_or_K: True catalyst calcination temperature(s) with units, usually oxide-forming thermal treatment in air/O2; do not map pyrolysis, carbonization, inert precursor destruction, or reaction heating here unless called calcination.
+Calcination_Temperature_Ramp_Rate_C_or_K_per_min: Heating ramp rate for true catalyst calcination only, with units.
+Calcination_Time_hr_min_s: Hold time for true catalyst calcination only, with units.
+Calcination_Atmosphere: Gas/atmosphere for true catalyst calcination only; use air/O2/N2/etc. only when the calcination step is explicit.
+Reduction_Temperature_C_or_K: Catalyst reduction/activation temperature with units, e.g. H2 pretreatment; use NR for unreduced catalysts.
+Reduction_Temperature_Ramp_Rate_C_or_K_per_min: Heating ramp rate for the catalyst reduction/activation step only.
+Reduction_Time_hr_min_s: Catalyst reduction/activation time with units; use "0 h" only when the paper explicitly says unreduced/no reduction.
+Reduction_Atmosphere: Gas/atmosphere for catalyst reduction/activation, e.g. H2, H2/N2, H2/Ar.
+Cooling_Rate_C_or_K_per_min: Catalyst synthesis cooling rate only, with units; use NR if only natural cooling is mentioned without rate.
