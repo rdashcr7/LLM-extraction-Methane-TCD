@@ -15,7 +15,7 @@ prompts/      # External prompt templates loaded at runtime
 Use Python 3.10 or newer, then install the required packages:
 
 ```bash
-pip install openai pandas python-dotenv openpyxl pillow
+pip install openai boto3 pandas python-dotenv openpyxl pillow
 ```
 
 Create a `.env` file next to `main.py`:
