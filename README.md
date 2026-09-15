@@ -1,4 +1,4 @@
-# Methane-Decomposition Data Extractor
+# Knowledge extraction from articles on TCD of Methane using Large Language Models
 
 This command-line pipeline extracts paper-level reaction constants from Elsevier XML-derived text and methane-decomposition datapoints from curated figure images. It writes a consolidated CSV, an Excel workbook, and an LLM-usage summary.
 
