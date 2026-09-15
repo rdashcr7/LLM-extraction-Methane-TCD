@@ -52,7 +52,7 @@ AWS_ACCESS_KEY_ID=your_access_key_id
 AWS_SECRET_ACCESS_KEY=your_secret_access_key
 MODEL_ID=your_bedrock_model_or_inference_profile_id
 ```
-Model IDs for openAI can be found at 'https://developers.openai.com/api/docs/models/all'. These are the model IDs that allowed us to invoke the AWS models:
+Model IDs for openAI can be found at 'https://developers.openai.com/api/docs/models/all'. These are the model IDs that allowed us to invoke the AWS models (When we used the model IDs on AWS website, the models could not be invoked):
 
 | Model | Model ID |
 |---|---|
