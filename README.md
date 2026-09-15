@@ -13,7 +13,9 @@ These scripts were used to extract the meta data in XML/HTML format of the artic
 | RSC | `meta data input/rsc.py` |
 | Wiley | `meta data input/wiley.py` |
 
-## Included extractors
+## Extractor files
+
+These are the main files that need to run once the meta data files are input ready.
 
 | Publisher | Extractor |
 |---|---|
