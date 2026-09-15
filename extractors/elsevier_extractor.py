@@ -37,19 +37,6 @@ Expected default layout:
         images/
           ...
 
-The loader is intentionally tolerant of earlier Elsevier artifact names too,
-including xml_article_text.txt, xml_figure_reference.csv, and xml_tables_text.txt.
-
-Required .env values for OpenAI:
-
-    OPENAI_API_KEY=...
-    OPENAI_MODEL_ID=<model-id>
-
-Optional:
-
-    OPENAI_BASE_URL=https://api.openai.com/v1
-    OPENAI_REASONING_EFFORT=low
-    OPENAI_TEXT_VERBOSITY=low
 """
 
 import argparse
