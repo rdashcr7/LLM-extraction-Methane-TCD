@@ -34,7 +34,7 @@ pip install openai boto3 pandas python-dotenv openpyxl pillow beautifulsoup4 fit
 
 ## Configure a model provider
 
-Create a `.env` file in the repository root. Never commit it.
+Create a `.env` file in the repository root.
 
 ### OpenAI
 
