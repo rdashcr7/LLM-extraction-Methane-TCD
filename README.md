@@ -1,6 +1,17 @@
 # Knowledge extraction from articles on TCD of Methane using Large Language Models
 
-Publisher-specific pipelines for extracting structured data from article text metadata and curated figure images along with audit reports for benchmarking.
+This repository contains files for knowledge extraction from articles on TCD of Methane from metadata files (HTML/XML) using large language models.
+
+## Preparing Input files
+
+These scripts were used to extract the meta data in XML/HTML format of the articles and images from the PDF format of the articles. 
+
+| Publisher | Script |
+|---|---|
+| Elsevier | `extractors/elsevier_extractor.py` |
+| MDPI | `extractors/mdpi_extractor.py` |
+| RSC | `extractors/rsc_extractor.py` |
+| Wiley | `extractors/wiley_extractor.py` |
 
 ## Included extractors
 
@@ -11,14 +22,12 @@ Publisher-specific pipelines for extracting structured data from article text me
 | RSC | `extractors/rsc_extractor.py` |
 | Wiley | `extractors/wiley_extractor.py` |
 
-Every publisher extractor supports both `openai` and `bedrock`. The journal-specific logic selects and loads the correct article metadata; the shared AWS Bedrock Converse transport handles Claude, Sonnet, Scout, Maverick, and other Bedrock models available to your account.
-
 ## Install
 
 Use Python 3.10 or newer and the following packages as well:
 
 ```bash
-pip install openai boto3 pandas python-dotenv openpyxl pillow
+pip install openai boto3 pandas python-dotenv openpyxl pillow beautifulsoup4 fitz pymupdf requests chemdataextractor
 ```
 
 ## Configure a model provider
