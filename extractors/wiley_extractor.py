@@ -39,16 +39,6 @@ Expected default layout:
 The caption loader is tailored to XML_and_image_extractor.py and/or
 Wiley_XML_text_and_table_extractor.py outputs, including figure and scheme rows.
 
-Required .env values for OpenAI:
-
-    OPENAI_API_KEY=...
-    OPENAI_MODEL_ID=<model-id>
-
-Optional:
-
-    OPENAI_BASE_URL=https://api.openai.com/v1
-    OPENAI_REASONING_EFFORT=low
-    OPENAI_TEXT_VERBOSITY=low
 """
 
 import argparse
