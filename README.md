@@ -72,16 +72,13 @@ python main.py --publisher rsc --provider openai \
   --output-prefix ./rsc_results
 ```
 
-Run `python main.py --list` to display the supported publisher/provider combinations. You can also run any individual extractor directly after setting `LLM_PROVIDER` in `.env`.
+Run `python main.py --list` to display the supported publisher/provider combinations. Individual extractors can be run directly after setting `LLM_PROVIDER` in `.env`.
 
-## Token limits
-
-Equivalent OpenAI and Bedrock calls use the same limits: 2,200 tokens for panel/series discovery, 1,400 for constant extraction, 1,100 for catalyst-profile enrichment, and 12,000 by default for figure extraction. Override the figure budget with `--figure-max-output-tokens` or `FIGURE_MAX_OUTPUT_TOKENS`.
 
 ## Prompts
 
-The `prompts/` folder contains all model instructions. The dispatcher supplies this directory automatically. Keep the prompt filenames unchanged unless you also update the corresponding extractor's `PROMPT_FILES` mapping.
+The `prompts/` folder contains all model instructions. By default, the extractor accesses the prompts in this directory.
 
 ## Inputs and outputs
 
-Each publisher script documents its expected input layout and default mapping workbook name in its module header and command-line help. A run writes CSV, XLSX, LLM usage, and audit-report outputs beside the selected output prefix.
+Each publisher script documents its expected input layout and default mapping workbook name in its module header and command-line help.
