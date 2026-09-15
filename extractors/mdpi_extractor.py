@@ -37,16 +37,6 @@ Expected default layout:
 
 The caption loader is tailored to the MDPI XML/text and image artifact outputs, including figure-caption rows.
 
-Required .env values for OpenAI:
-
-    OPENAI_API_KEY=...
-    OPENAI_MODEL_ID=<model-id>
-
-Optional:
-
-    OPENAI_BASE_URL=https://api.openai.com/v1
-    OPENAI_REASONING_EFFORT=low
-    OPENAI_TEXT_VERBOSITY=low
 """
 
 import argparse
