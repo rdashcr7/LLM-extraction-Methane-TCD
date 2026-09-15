@@ -66,21 +66,13 @@ Model IDs for openAI can be found at 'https://developers.openai.com/api/docs/mod
 Use `main.py` to select the publisher and provider. All other options are forwarded directly to the chosen extractor:
 
 ```bash
-python main.py --publisher elsevier --provider bedrock \
-  --mapping-xlsx "Elsevier dois.xlsx" \
-  --xml-root ./XMLs \
-  --pdf-base-dir ./PDFs \
-  --output-prefix ./elsevier_results
+python main.py --publisher elsevier --provider bedrock --mapping-xlsx "Elsevier dois.xlsx" --xml-root ./XMLs --pdf-base-dir ./PDFs --output-prefix ./elsevier_results
 ```
 
 Example OpenAI run for RSC:
 
 ```bash
-python main.py --publisher rsc --provider openai \
-  --mapping-xlsx "RSC_DOIs.xlsx" \
-  --html-root ./HTMLs \
-  --pdf-base-dir ./PDFs \
-  --output-prefix ./rsc_results
+python main.py --publisher rsc --provider openai --mapping-xlsx "RSC_DOIs.xlsx" --html-root ./HTMLs --pdf-base-dir ./PDFs --output-prefix ./rsc_results  
 ```
 
 Run `python main.py --list` to display the supported publisher/provider combinations. Individual extractors can be run directly after setting `LLM_PROVIDER` in `.env`.
