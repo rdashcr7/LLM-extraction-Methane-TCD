@@ -15,7 +15,7 @@ These scripts were used to extract the meta data in XML/HTML format of the artic
 
 ## Extractor files
 
-These are the main files that need to run once the meta data files are input ready.
+These are the extractor files that main.py relies on for extracting from different providers' articles.
 
 | Publisher | Extractor |
 |---|---|
