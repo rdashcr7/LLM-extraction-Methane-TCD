@@ -2,6 +2,10 @@
 
 This repository contains files for knowledge extraction from articles on TCD of Methane from metadata files (HTML/XML) using large language models.
 
+## Scopus Article Rereival
+
+Scopus_Article_Retreival.py is the script used for Scopus search to retrieve articles on the topic. This requires obtaining an Elsevier_API_KEY and an inst_token.
+
 ## Preparing Input files
 
 These scripts were used to extract the meta data in XML/HTML format of the articles and images from the PDF format of the articles. 
@@ -29,7 +33,7 @@ These are the extractor files that main.py relies on for extracting from differe
 Use Python 3.10 or newer and install the following packages as well:
 
 ```bash
-pip install openai boto3 pandas python-dotenv openpyxl pillow beautifulsoup4 fitz pymupdf requests chemdataextractor
+pip install openai boto3 pandas python-dotenv openpyxl pillow beautifulsoup4 fitz pymupdf requests chemdataextractor urllib3 pickle
 ```
 
 ## Configure a model provider
