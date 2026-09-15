@@ -1,6 +1,6 @@
-# Multi-Journal Methane-Decomposition Data Extractors
+# Knowledge extraction from articles on TCD of Methane using Large Language Models
 
-Publisher-specific pipelines for extracting paper-level reaction constants from article text and methane-conversion datapoints from curated figure images.
+Publisher-specific pipelines for extracting structured data from article text metadata and curated figure images along with audit reports for benchmarking.
 
 ## Included extractors
 
@@ -15,7 +15,7 @@ Every publisher extractor supports both `openai` and `bedrock`. The journal-spec
 
 ## Install
 
-Use Python 3.10 or newer:
+Use Python 3.10 or newer and the following packages as well:
 
 ```bash
 pip install openai boto3 pandas python-dotenv openpyxl pillow
@@ -31,8 +31,6 @@ Create a `.env` file in the repository root. Never commit it.
 OPENAI_API_KEY=your_api_key
 OPENAI_MODEL_ID=gpt-5.5
 OPENAI_BASE_URL=https://api.openai.com/v1
-OPENAI_REASONING_EFFORT=low
-OPENAI_TEXT_VERBOSITY=low
 ```
 
 ### AWS Bedrock
@@ -43,8 +41,14 @@ AWS_ACCESS_KEY_ID=your_access_key_id
 AWS_SECRET_ACCESS_KEY=your_secret_access_key
 MODEL_ID=your_bedrock_model_or_inference_profile_id
 ```
+Model IDs for openAI can be found at 'https://developers.openai.com/api/docs/models/all'. These are the model IDs that allowed us to invoke the AWS models:
 
-`BEDROCK_MODEL_ID` may be used instead of `MODEL_ID`. `AWS_SESSION_TOKEN` is required when using temporary AWS credentials. The Bedrock script supports Claude and Meta models available to your AWS account and region, including the relevant Claude 4.6, Sonnet 4.6, Scout, and Maverick model IDs or inference profiles.
+| Model | Model ID |
+|---|---|
+| Llama 4 Scout 17B | us.meta.llama4-scout-17b-instruct-v1:0 |
+| Llama 4 Maverick 17B | us.meta.llama4-maverick-17b-instruct-v1:0 |
+| Claude Sonnet 4.6 | us.anthropic.claude-sonnet-4-6 |
+| Claude Opus 4.6 | us.anthropic.claude-opus-4-6-v1 |
 
 ## Run
 
@@ -80,4 +84,4 @@ The `prompts/` folder contains all model instructions. The dispatcher supplies t
 
 ## Inputs and outputs
 
-Each publisher script documents its expected input layout and default mapping workbook name in its module header and command-line help. A run writes CSV, XLSX, LLM usage, and (when available) audit-report outputs beside the selected output prefix.
+Each publisher script documents its expected input layout and default mapping workbook name in its module header and command-line help. A run writes CSV, XLSX, LLM usage, and audit-report outputs beside the selected output prefix.
