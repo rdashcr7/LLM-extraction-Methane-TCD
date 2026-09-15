@@ -26,7 +26,7 @@ These are the extractor files that main.py relies on for extracting from differe
 
 ## Install
 
-Use Python 3.10 or newer and the following packages as well:
+Use Python 3.10 or newer and install the following packages as well:
 
 ```bash
 pip install openai boto3 pandas python-dotenv openpyxl pillow beautifulsoup4 fitz pymupdf requests chemdataextractor
