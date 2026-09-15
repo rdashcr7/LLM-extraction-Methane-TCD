@@ -8,10 +8,10 @@ These scripts were used to extract the meta data in XML/HTML format of the artic
 
 | Publisher | Script |
 |---|---|
-| Elsevier | `extractors/elsevier_extractor.py` |
-| MDPI | `extractors/mdpi_extractor.py` |
-| RSC | `extractors/rsc_extractor.py` |
-| Wiley | `extractors/wiley_extractor.py` |
+| Elsevier | `meta data input/elsevier.py` |
+| MDPI | `meta data input/mdpi.py` |
+| RSC | `meta data input/rsc.py` |
+| Wiley | `meta data input/wiley.py` |
 
 ## Included extractors
 
