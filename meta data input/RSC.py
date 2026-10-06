@@ -5,52 +5,6 @@ Created on Tue Sep 15 15:52:34 2026
 @author: RDASH
 """
 
-# -*- coding: utf-8 -*-
-"""
-Convert downloaded RSC HTML files into text artifacts, table files, figure-caption
-files, and JPEG figure images from locally saved HTML resource folders.
-
-Expected folder layout:
-    HTMLs/Paper 1/Paper 1.html
-    HTMLs/Paper 2/Paper 2.html
-    ...
-
-HTML-side text, caption, and table outputs are rewritten inside each HTML paper
-folder. Figure images are rebuilt in PDFs/Paper X/images from Paper X_files.
-
-Outputs written inside each HTMLs/Paper X folder:
-    sentences.txt
-    fulltext.txt
-    figure_captions.txt
-    figure_captions.csv
-    table_captions.txt
-    table_captions.csv
-    tables.json
-    tables_text.txt
-    tables_rows.csv
-
-Behavior:
-1. Parse each saved RSC HTML with ChemDataExtractor's RscHtmlReader.
-2. Extract cleaned article body text (after Abstract, before Citation).
-3. Extract main-article figure captions directly from the saved RSC HTML.
-4. Extract main-article tables directly from the saved RSC HTML.
-5. Append a plain-text rendering of those tables to fulltext.txt.
-6. Append table captions / header lines / row lines to sentences.txt so the
-   table content is included in the exported text artifacts.
-7. Remove previously generated HTML-side artifact files before writing fresh
-   ones. PDF image folders are not touched.
-
-Why this exists:
-- The prior RSC extractor already handled figure images.
-- It dropped tables because the main text path used:
-      get_fulltext_from_elements(..., include_tables=False)
-  and did not separately parse the HTML tables.
-- In saved RSC HTML, real data tables appear in structures such as:
-      <div class="table_caption"><b>Table 1</b> ...</div>
-      <div class="rtable__wrapper"> ... <table class="tgroup rtable"> ...
-  while equations also use <table> tags and therefore must be filtered out.
-"""
-
 from __future__ import annotations
 
 import argparse
