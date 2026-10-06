@@ -1,35 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Parse MDPI XML article files into text, table, and caption artifacts, then save
-figure images from local XML graphics or (when needed) matching PDFs.
-
-Expected folder layout:
-    XMLs/Paper 1/Paper 1.xml
-    XMLs/Paper 2/Paper 2.xml
-    ...
-
-Outputs written inside each XMLs/Paper X folder:
-    sentences.txt
-    fulltext.txt
-    figure_captions.txt
-    figure_captions.csv
-    table_captions.txt
-    table_captions.csv
-    tables.json
-    tables_text.txt
-    tables_rows.csv
-
-Behavior:
-1. Parse MDPI XML (JATS-like) directly with ElementTree.
-2. Extract article title, abstract, section titles, and body paragraphs.
-3. Extract figure captions from <fig> elements (caption files only; no image work).
-4. Extract article tables from <table-wrap> blocks, including labels, captions,
-   header rows, body rows, and table footnotes.
-5. Append a readable text rendering of each numbered main-article table into
-   fulltext.txt.
-6. Add table caption/header/row/note lines into sentences.txt.
-7. Never touch PDFs or any existing images folders.
-"""
 
 from __future__ import annotations
 
