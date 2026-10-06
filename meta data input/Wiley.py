@@ -1,47 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Convert XML article files into text artifacts and extract figure/scheme images
-from matching PDFs or from locally available XML-referenced graphic files.
-
-This version is intended for Wiley XML and also keeps support for MDPI/JATS-like
-XML where possible.
-
-Expected folder layout:
-    XMLs/Paper 1/Paper 1.xml
-    XMLs/Paper 2/Paper 2.xml
-    ...
-
-    PDFs/Paper 1/Paper 1.pdf
-    PDFs/Paper 2/Paper 2.pdf
-    ...
-
-Outputs:
-    XMLs/Paper X/sentences.txt
-    XMLs/Paper X/fulltext.txt
-    XMLs/Paper X/figure_captions.txt
-    XMLs/Paper X/figure_captions.csv
-
-    PDFs/Paper X/images/figure_1.jpeg
-    PDFs/Paper X/images/scheme_1.jpeg
-    PDFs/Paper X/images/... 
-    PDFs/Paper X/images/image_manifest.csv
-    PDFs/Paper X/images/image_manifest.json
-    PDFs/Paper X/images/figure_captions.txt
-    PDFs/Paper X/images/figure_captions.csv
-
-Behavior:
-1. Parse XML directly with ElementTree.
-2. Support Wiley XML (<figure>, <mediaResource>) and MDPI/JATS-like XML
-   (<fig>, <graphic>).
-3. Extract article title, abstract, section titles, and body paragraphs.
-4. Split text into sentences using ChemDataExtractor if available, otherwise a
-   regex fallback.
-5. Extract figure/scheme captions from XML.
-6. If local figure files referenced by the XML are present, convert them to JPEG
-   and save them with XML-based filenames.
-7. Otherwise, fall back to extracting images from the matching PDF and try to
-   match them to XML figure/scheme numbers using nearby PDF text.
-"""
 
 from __future__ import annotations
 
