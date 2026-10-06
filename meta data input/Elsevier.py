@@ -1,54 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Elsevier XML text/table extractor plus PDF figure-image extractor.
-
-What this script does:
-1. Reads an Excel workbook named "Elsevier dois.xlsx" by default. The workbook
-   must contain columns named "Paper" and "DOIs".
-2. Optionally downloads Elsevier article XML files by DOI using:
-      ELSEVIER_API_KEY
-      ELSEVIER_INSTTOKEN   (optional; ELSEVIER_INSTOTKEN is also accepted as a typo fallback)
-   from a .env file or the environment.
-3. Parses downloaded Elsevier XML files into:
-      - article title
-      - DOI
-      - body text
-      - XML figure captions/references
-      - XML tables, including captions, header rows, body rows, footer rows, and notes
-4. Extracts embedded figure-like images from each PDF with PyMuPDF.
-
-Default expected layout:
-    Elsevier dois.xlsx
-    .env
-    XMLs/Elsevier/<doi-with-safe-filename>.xml
-    PDFs/<Paper>/<Paper>.pdf
-
-Per-paper outputs are written into:
-    PDFs/<Paper>/
-        xml_article_text.txt
-        xml_figure_reference.csv
-        xml_table_captions.txt
-        xml_table_captions.csv
-        xml_tables.json
-        xml_tables_text.txt
-        xml_tables_rows.csv
-        images/
-            figure_1.png
-            figure_2.jpg
-            image_manifest.json
-
-Corpus-level parsed XML outputs are written into:
-    XMLs/parsed/
-        <paper_slug>.json
-        <paper_slug>.txt
-        <paper_slug>_table_captions.csv
-        <paper_slug>_tables.json
-        <paper_slug>_tables_rows.csv
-
-Install dependencies, if needed:
-    pip install pymupdf pandas requests python-dotenv openpyxl
-"""
 
 from __future__ import annotations
 
