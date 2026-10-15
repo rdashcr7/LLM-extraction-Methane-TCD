@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 from urllib.parse import quote_plus
 
-import fitz  # PyMuPDF
+import fitz
 import pandas as pd
 import requests
 from dotenv import load_dotenv
